@@ -5,7 +5,7 @@ import java.io.IOException;
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONObject;
 
-import com.deepaksp.odg.property.Property;
+import com.deepaksp.odg.property.URLProperties;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 
@@ -23,8 +23,8 @@ public class PostcodeProperties {
 
     private static String sort;
 
-    protected PostcodeProperties(String resource_id) {
-        PostcodeProperties.resource_id = resource_id;
+    protected PostcodeProperties(URLProperties urlProperties) {
+        PostcodeProperties.resource_id = urlProperties.toString();
     }
 
     /**
@@ -68,16 +68,16 @@ public class PostcodeProperties {
     }
 
     public JSONObject asJson() throws UnirestException, IOException {
-        return Unirest.get(URLs.JSON.toString()).queryString("resource_id", Property.get(resource_id))
-                .queryString("api-key", Property.get("api-key"))
+        return Unirest.get(URLs.JSON.toString()).queryString("resource_id", resource_id)
+                .queryString("api-key", URLProperties.API_KEY.toString())
                 .queryString(StringUtils.trim(sortField) != null ? sortField : "sort[id]",
                         StringUtils.trim(sort) != null ? sort : Sort.ASCENDING.toString())
                 .asJson().getBody().getObject();
     }
 
     public String asXML() throws UnirestException, IOException {
-        return Unirest.get(URLs.XML.toString()).queryString("resource_id", Property.get(resource_id))
-                .queryString("api-key", Property.get("api-key"))
+        return Unirest.get(URLs.XML.toString()).queryString("resource_id", resource_id)
+                .queryString("api-key", URLProperties.API_KEY.toString())
                 .queryString(StringUtils.trim(sortField) != null ? sortField : "sort[id]",
                         StringUtils.trim(sort) != null ? sort : Sort.ASCENDING.toString())
                 .asString().getBody();

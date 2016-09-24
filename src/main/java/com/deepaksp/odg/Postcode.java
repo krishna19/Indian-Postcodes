@@ -1,5 +1,7 @@
 package com.deepaksp.odg;
 
+import com.deepaksp.odg.property.URLProperties;
+
 /**
  * @author Deepak
  *
@@ -7,7 +9,7 @@ package com.deepaksp.odg;
 public class Postcode {
 
     public static PostcodeProperties withContactDetails() {
-        return new PostcodeProperties("contact_details_resource_id");
+        return new PostcodeProperties(URLProperties.CONTACT_DETAILS);
     }
 
 }
