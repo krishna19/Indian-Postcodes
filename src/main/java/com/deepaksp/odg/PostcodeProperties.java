@@ -11,9 +11,9 @@ import com.mashape.unirest.http.exceptions.UnirestException;
 
 public class PostcodeProperties {
 
-    private static int offset;
+    private static Integer offset;
 
-    private static int limit = 100;
+    private static Integer limit;
 
     private static String fields;
 
@@ -33,7 +33,7 @@ public class PostcodeProperties {
      * @param offset
      * @return
      */
-    public PostcodeProperties offset(int offset) {
+    public PostcodeProperties offset(Integer offset) {
         PostcodeProperties.offset = offset;
         return this;
     }
@@ -44,7 +44,7 @@ public class PostcodeProperties {
      * @param limit
      * @return
      */
-    public PostcodeProperties limit(int limit) {
+    public PostcodeProperties limit(Integer limit) {
         PostcodeProperties.limit = limit;
         return this;
     }
@@ -68,18 +68,35 @@ public class PostcodeProperties {
     }
 
     public JSONObject asJson() throws UnirestException, IOException {
-        return Unirest.get(URLs.JSON.toString()).queryString("resource_id", resource_id)
-                .queryString("api-key", URLProperties.API_KEY.toString())
-                .queryString(StringUtils.trim(sortField) != null ? sortField : "sort[id]",
-                        StringUtils.trim(sort) != null ? sort : Sort.ASCENDING.toString())
-                .asJson().getBody().getObject();
+        try {
+            return Unirest.get(URLs.JSON.toString()).queryString("resource_id", resource_id)
+                    .queryString("api-key", URLProperties.API_KEY.toString())
+                    .queryString(StringUtils.trim(sortField) != null ? sortField : "sort[id]",
+                            StringUtils.trim(sort) != null ? sort : Sort.ASCENDING.toString())
+                    .queryString("limit", limit != null ? limit : 100).asJson().getBody().getObject();
+        } finally {
+            clear();
+        }
     }
 
     public String asXML() throws UnirestException, IOException {
-        return Unirest.get(URLs.XML.toString()).queryString("resource_id", resource_id)
-                .queryString("api-key", URLProperties.API_KEY.toString())
-                .queryString(StringUtils.trim(sortField) != null ? sortField : "sort[id]",
-                        StringUtils.trim(sort) != null ? sort : Sort.ASCENDING.toString())
-                .asString().getBody();
+        try {
+            return Unirest.get(URLs.XML.toString()).queryString("resource_id", resource_id)
+                    .queryString("api-key", URLProperties.API_KEY.toString())
+                    .queryString(StringUtils.trim(sortField) != null ? sortField : "sort[id]",
+                            StringUtils.trim(sort) != null ? sort : Sort.ASCENDING.toString())
+                    .queryString("limit", limit != null ? limit : 100).asString().getBody();
+        } finally {
+            clear();
+        }
+    }
+
+    private void clear() {
+        offset = null;
+        limit = null;
+        fields = null;
+        resource_id = null;
+        sortField = null;
+        sort = null;
     }
 }
