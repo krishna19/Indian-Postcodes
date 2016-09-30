@@ -14,7 +14,7 @@ import com.deepaksp.odg.constants.Keys;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 
-public class PostcodeTest {
+public class PostcodeContactDetailsTest {
 
     @Test
     public void withContactDetailsAsJsonTest() throws JSONException, UnirestException, IOException {
@@ -114,6 +114,23 @@ public class PostcodeTest {
     }
 
     @Test
+    public void filtersWithContactDetailsAsXMLTest() throws SAXException, IOException, UnirestException {
+        XMLAssert.assertXMLEqual(Unirest
+                .get("https://data.gov.in/api/datastore/resource.xml?resource_id=0a076478-3fd3-4e2c-b2d2-581876f56d77")
+                .queryString("api-key", Keys.API_KEY).queryString(new HashMap() {
+
+                    {
+                        put("filters[pincode]", 560073);
+                    }
+                }).asString().getBody(), Postcode.withContactDetails(Keys.API_KEY.toString()).filters(new HashMap() {
+
+                    {
+                        put(Filter.PINCODE, 560073);
+                    }
+                }).asXML());
+    }
+
+    @Test
     public void fieldsWithContactDetailsAsJsonTest() throws UnirestException, JSONException, IOException {
         JSONAssert.assertEquals(Unirest
                 .get("https://data.gov.in/api/datastore/resource.json?resource_id=0a076478-3fd3-4e2c-b2d2-581876f56d77")
@@ -130,5 +147,23 @@ public class PostcodeTest {
                             }
                         }).asJson(),
                 JSONCompareMode.LENIENT);
+    }
+
+    @Test
+    public void fieldsWithContactDetailsAsXMLTest() throws SAXException, IOException, UnirestException {
+        XMLAssert.assertXMLEqual(Unirest
+                .get("https://data.gov.in/api/datastore/resource.xml?resource_id=0a076478-3fd3-4e2c-b2d2-581876f56d77")
+                .queryString("api-key", Keys.API_KEY).queryString("fields", "pincode").queryString(new HashMap() {
+
+                    {
+                        put("filters[pincode]", 560073);
+                    }
+                }).asString().getBody(), Postcode.withContactDetails(Keys.API_KEY.toString())
+                        .fields(new Fields[] { Fields.PINCODE }).filters(new HashMap() {
+
+                            {
+                                put(Filter.PINCODE, 560073);
+                            }
+                        }).asXML());
     }
 }

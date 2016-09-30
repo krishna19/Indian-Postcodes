@@ -11,6 +11,10 @@ import com.deepaksp.odg.property.URLProperties;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 
+/**
+ * @author Deepak
+ *
+ */
 public class PostcodeProperties {
 
     private static Integer offset;
@@ -45,6 +49,12 @@ public class PostcodeProperties {
         return this;
     }
 
+    /**
+     * matching conditions to select
+     * 
+     * @param filters
+     * @return
+     */
     @SuppressWarnings({ "rawtypes", "unchecked" })
     public PostcodeProperties filters(HashMap<Filter, String> filters) {
         HashMap<String, Object> filter = new HashMap();
@@ -77,6 +87,13 @@ public class PostcodeProperties {
         return this;
     }
 
+    /**
+     * Order by field in particular order
+     * 
+     * @param sortField
+     * @param sort
+     * @return
+     */
     public PostcodeProperties sort(Fields[] sortField, Sort sort) {
         PostcodeProperties.sortField = "sort[".concat(StringUtils.join(Fields.toStringArray(sortField), ","))
                 .concat("]");
