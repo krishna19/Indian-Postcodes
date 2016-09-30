@@ -169,4 +169,20 @@ public class PincodeContactLatitudeLongitudeTest {
                             }
                         }).asXML());
     }
+
+    @Test
+    public void testWithMoreParameters() throws UnirestException, IOException {
+        JSONAssert.assertEquals(Unirest
+                .get("https://data.gov.in/api/datastore/resource.json?resource_id=04cbe4b1-2f2b-4c39-a1d5-1c2e28bc0e32&sort[pincode]=asc&filters[pincode]=110006&fields=pincode&limit=50&offset=0")
+                .queryString("api-key", Keys.API_KEY).asJson().getBody().getObject(),
+                Pincode.pincodeContactLatitudeLongitude(Keys.API_KEY.toString()).limit(50).offset(0)
+                        .sort(new Fields[] { Fields.PINCODE }, Sort.ASCENDING).fields(new Fields[] { Fields.PINCODE })
+                        .filters(new HashMap() {
+
+                            {
+                                put(Filter.PINCODE, 110006);
+                            }
+                        }).asJson(),
+                JSONCompareMode.STRICT);
+    }
 }

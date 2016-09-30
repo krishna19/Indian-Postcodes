@@ -139,5 +139,6 @@ public class PincodeProperties {
         sortField = null;
         sort = null;
         filters = null;
+        api_key = null;
     }
 }

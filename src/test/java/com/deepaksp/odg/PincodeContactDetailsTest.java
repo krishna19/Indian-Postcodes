@@ -166,4 +166,20 @@ public class PincodeContactDetailsTest {
                             }
                         }).asXML());
     }
+
+    @Test
+    public void testWithMoreParameters() throws UnirestException, IOException {
+        JSONAssert.assertEquals(Unirest
+                .get("https://data.gov.in/api/datastore/resource.json?resource_id=0a076478-3fd3-4e2c-b2d2-581876f56d77&sort[pincode]=asc&filters[pincode]=110006&fields=pincode&limit=50&offset=0")
+                .queryString("api-key", Keys.API_KEY).asJson().getBody().getObject(),
+                Pincode.pincodeContactDetails(Keys.API_KEY.toString()).limit(50).offset(0)
+                        .sort(new Fields[] { Fields.PINCODE }, Sort.ASCENDING).fields(new Fields[] { Fields.PINCODE })
+                        .filters(new HashMap() {
+
+                            {
+                                put(Filter.PINCODE, 110006);
+                            }
+                        }).asJson(),
+                JSONCompareMode.STRICT);
+    }
 }

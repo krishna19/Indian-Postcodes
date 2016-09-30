@@ -18,10 +18,6 @@ public class PincodeDetailsTest {
 
     @Test
     public void withPincodeDetailsAsJsonTest() throws JSONException, UnirestException, IOException {
-        System.out.println(Unirest
-                .get("https://data.gov.in/api/datastore/resource.json?resource_id=6176ee09-3d56-4a3b-8115-21841576b2f6")
-                .queryString("api-key", Keys.API_KEY).getUrl());
-        System.out.println(Pincode.pincodeDetails(Keys.API_KEY.toString()).asJson());
         JSONAssert.assertEquals(Unirest
                 .get("https://data.gov.in/api/datastore/resource.json?resource_id=6176ee09-3d56-4a3b-8115-21841576b2f6")
                 .queryString("api-key", Keys.API_KEY).asJson().getBody().getObject(),
@@ -169,5 +165,21 @@ public class PincodeDetailsTest {
                                 put(Filter.PINCODE, 560073);
                             }
                         }).asXML());
+    }
+
+    @Test
+    public void testWithMoreParameters() throws UnirestException, IOException {
+        JSONAssert.assertEquals(Unirest
+                .get("https://data.gov.in/api/datastore/resource.json?resource_id=6176ee09-3d56-4a3b-8115-21841576b2f6&sort[pincode]=asc&filters[pincode]=110006&fields=pincode&limit=50&offset=0")
+                .queryString("api-key", Keys.API_KEY).asJson().getBody().getObject(),
+                Pincode.pincodeDetails(Keys.API_KEY.toString()).limit(50).offset(0)
+                        .sort(new Fields[] { Fields.PINCODE }, Sort.ASCENDING).fields(new Fields[] { Fields.PINCODE })
+                        .filters(new HashMap() {
+
+                            {
+                                put(Filter.PINCODE, 110006);
+                            }
+                        }).asJson(),
+                JSONCompareMode.STRICT);
     }
 }
