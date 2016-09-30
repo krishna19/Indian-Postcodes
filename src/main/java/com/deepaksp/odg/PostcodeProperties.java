@@ -27,8 +27,11 @@ public class PostcodeProperties {
 
     private static HashMap<String, Object> filters;
 
-    protected PostcodeProperties(URLProperties urlProperties) {
+    private static String api_key;
+
+    protected PostcodeProperties(URLProperties urlProperties, String api_key) {
         PostcodeProperties.resource_id = urlProperties.toString();
+        PostcodeProperties.api_key = api_key;
     }
 
     /**
@@ -84,7 +87,7 @@ public class PostcodeProperties {
     public JSONObject asJson() throws UnirestException, IOException {
         try {
             return Unirest.get(URLs.JSON.toString()).queryString("resource_id", resource_id)
-                    .queryString("api-key", URLProperties.API_KEY.toString())
+                    .queryString("api-key", api_key)
                     .queryString(StringUtils.trim(sortField) != null ? sortField : "sort[id]",
                             StringUtils.trim(sort) != null ? sort : Sort.ASCENDING.toString())
                     .queryString("limit", limit != null ? limit : 100)
@@ -99,9 +102,9 @@ public class PostcodeProperties {
     public String asXML() throws UnirestException, IOException {
         try {
             return Unirest.get(URLs.XML.toString()).queryString("resource_id", resource_id)
-                    .queryString("api-key", URLProperties.API_KEY.toString())
-                    .queryString(StringUtils.trim(sortField) != null ? sortField : "sort[id]",
-                            StringUtils.trim(sort) != null ? sort : Sort.ASCENDING.toString())
+                    .queryString("api-key", api_key)
+                    .queryString(StringUtils.trim(sortField) != null ? sortField : "",
+                            StringUtils.trim(sort) != null ? sort : "")
                     .queryString("limit", limit != null ? limit : 100)
                     .queryString("offset", offset != null ? offset : 0)
                     .queryString(fields != null ? "fields" : "", fields != null ? fields : "")
@@ -118,5 +121,6 @@ public class PostcodeProperties {
         resource_id = null;
         sortField = null;
         sort = null;
+        filters = null;
     }
 }

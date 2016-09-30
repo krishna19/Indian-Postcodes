@@ -8,8 +8,8 @@ import com.deepaksp.odg.property.URLProperties;
  */
 public class Postcode {
 
-    public static PostcodeProperties withContactDetails() {
-        return new PostcodeProperties(URLProperties.CONTACT_DETAILS);
+    public static PostcodeProperties withContactDetails(String api_key) {
+        return new PostcodeProperties(URLProperties.CONTACT_DETAILS, api_key);
     }
 
 }
