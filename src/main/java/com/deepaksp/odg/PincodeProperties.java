@@ -105,8 +105,8 @@ public class PincodeProperties {
         try {
             return Unirest.get(URLs.JSON.toString()).queryString("resource_id", resource_id)
                     .queryString("api-key", api_key)
-                    .queryString(StringUtils.trim(sortField) != null ? sortField : "sort[id]",
-                            StringUtils.trim(sort) != null ? sort : Sort.ASCENDING.toString())
+                    .queryString(StringUtils.trim(sortField) != null ? sortField : "",
+                            StringUtils.trim(sort) != null ? sort : "")
                     .queryString("limit", limit != null ? limit : 100)
                     .queryString("offset", offset != null ? offset : 0)
                     .queryString(fields != null ? "fields" : "", fields != null ? fields : "")
