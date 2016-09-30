@@ -1,6 +1,8 @@
 package com.deepaksp.odg;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONObject;
@@ -23,6 +25,8 @@ public class PostcodeProperties {
 
     private static String sort;
 
+    private static HashMap<String, Object> filters;
+
     protected PostcodeProperties(URLProperties urlProperties) {
         PostcodeProperties.resource_id = urlProperties.toString();
     }
@@ -35,6 +39,16 @@ public class PostcodeProperties {
      */
     public PostcodeProperties offset(Integer offset) {
         PostcodeProperties.offset = offset;
+        return this;
+    }
+
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+    public PostcodeProperties filters(HashMap<Filter, String> filters) {
+        HashMap<String, Object> filter = new HashMap();
+        for (Map.Entry<Filter, String> f : filters.entrySet()) {
+            filter.put(f.getKey().toString(), f.getValue());
+        }
+        PostcodeProperties.filters = filter;
         return this;
     }
 
@@ -55,13 +69,13 @@ public class PostcodeProperties {
      * @param fields
      * @return
      */
-    public PostcodeProperties fields(String[] fields) {
+    public PostcodeProperties fields(Fields[] fields) {
         PostcodeProperties.fields = StringUtils.join(fields, ",");
         return this;
     }
 
-    public PostcodeProperties sort(SortFields[] sortField, Sort sort) {
-        PostcodeProperties.sortField = "sort[".concat(StringUtils.join(SortFields.toStringArray(sortField), ","))
+    public PostcodeProperties sort(Fields[] sortField, Sort sort) {
+        PostcodeProperties.sortField = "sort[".concat(StringUtils.join(Fields.toStringArray(sortField), ","))
                 .concat("]");
         PostcodeProperties.sort = sort.toString();
         return this;
@@ -73,7 +87,10 @@ public class PostcodeProperties {
                     .queryString("api-key", URLProperties.API_KEY.toString())
                     .queryString(StringUtils.trim(sortField) != null ? sortField : "sort[id]",
                             StringUtils.trim(sort) != null ? sort : Sort.ASCENDING.toString())
-                    .queryString("limit", limit != null ? limit : 100).asJson().getBody().getObject();
+                    .queryString("limit", limit != null ? limit : 100)
+                    .queryString("offset", offset != null ? offset : 0)
+                    .queryString(fields != null ? "fields" : "", fields != null ? fields : "")
+                    .queryString(filters != null ? filters : new HashMap<>()).asJson().getBody().getObject();
         } finally {
             clear();
         }
@@ -85,7 +102,10 @@ public class PostcodeProperties {
                     .queryString("api-key", URLProperties.API_KEY.toString())
                     .queryString(StringUtils.trim(sortField) != null ? sortField : "sort[id]",
                             StringUtils.trim(sort) != null ? sort : Sort.ASCENDING.toString())
-                    .queryString("limit", limit != null ? limit : 100).asString().getBody();
+                    .queryString("limit", limit != null ? limit : 100)
+                    .queryString("offset", offset != null ? offset : 0)
+                    .queryString(fields != null ? "fields" : "", fields != null ? fields : "")
+                    .queryString(filters != null ? filters : new HashMap<>()).asString().getBody();
         } finally {
             clear();
         }

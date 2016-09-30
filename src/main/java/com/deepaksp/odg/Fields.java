@@ -4,11 +4,11 @@ package com.deepaksp.odg;
  * @author Deepak
  *
  */
-public enum SortFields {
+public enum Fields {
 
     OFFICE_NAME("officename"),
     PINCODE("pincode"),
-    OFFICE_TYOE("officeType"),
+    OFFICE_TYPE("officeType"),
     DELIVERY_STATUS("Deliverystatus"),
     DIVISION_NAME("divisionname"),
     REGION_NAME("regionname"),
@@ -24,7 +24,7 @@ public enum SortFields {
 
     private String name;
 
-    private SortFields(String name) {
+    private Fields(String name) {
         this.name = name;
     }
 
@@ -33,7 +33,7 @@ public enum SortFields {
         return name;
     }
 
-    protected static String[] toStringArray(SortFields[] states) {
+    protected static String[] toStringArray(Fields[] states) {
         String[] names = new String[states.length];
 
         for (int i = 0; i < states.length; i++) {
