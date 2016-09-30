@@ -14,14 +14,14 @@ import com.deepaksp.odg.constants.Keys;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 
-public class PostcodeContactDetailsTest {
+public class PincodeContactDetailsTest {
 
     @Test
     public void withContactDetailsAsJsonTest() throws JSONException, UnirestException, IOException {
         JSONAssert.assertEquals(Unirest
                 .get("https://data.gov.in/api/datastore/resource.json?resource_id=0a076478-3fd3-4e2c-b2d2-581876f56d77")
                 .queryString("api-key", Keys.API_KEY).asJson().getBody().getObject(),
-                Postcode.withContactDetails(Keys.API_KEY.toString()).asJson(), JSONCompareMode.STRICT);
+                Pincode.pincodeContactDetails(Keys.API_KEY.toString()).asJson(), JSONCompareMode.STRICT);
     }
 
     @Test
@@ -29,7 +29,7 @@ public class PostcodeContactDetailsTest {
         JSONAssert.assertEquals(Unirest
                 .get("https://data.gov.in/api/datastore/resource.json?resource_id=0a076478-3fd3-4e2c-b2d2-581876f56d77&limit=10")
                 .queryString("api-key", Keys.API_KEY).asJson().getBody().getObject(),
-                Postcode.withContactDetails(Keys.API_KEY.toString()).limit(10).asJson(), JSONCompareMode.STRICT);
+                Pincode.pincodeContactDetails(Keys.API_KEY.toString()).limit(10).asJson(), JSONCompareMode.STRICT);
     }
 
     @Test
@@ -37,7 +37,7 @@ public class PostcodeContactDetailsTest {
         JSONAssert.assertEquals(Unirest
                 .get("https://data.gov.in/api/datastore/resource.json?resource_id=0a076478-3fd3-4e2c-b2d2-581876f56d77&offset=10")
                 .queryString("api-key", Keys.API_KEY).asJson().getBody().getObject(),
-                Postcode.withContactDetails(Keys.API_KEY.toString()).offset(10).asJson(), JSONCompareMode.STRICT);
+                Pincode.pincodeContactDetails(Keys.API_KEY.toString()).offset(10).asJson(), JSONCompareMode.STRICT);
     }
 
     @Test
@@ -45,13 +45,13 @@ public class PostcodeContactDetailsTest {
         JSONAssert.assertEquals(Unirest
                 .get("https://data.gov.in/api/datastore/resource.json?resource_id=0a076478-3fd3-4e2c-b2d2-581876f56d77&sort[pincode]=asc")
                 .queryString("api-key", Keys.API_KEY).asJson().getBody().getObject(),
-                Postcode.withContactDetails(Keys.API_KEY.toString())
+                Pincode.pincodeContactDetails(Keys.API_KEY.toString())
                         .sort(new Fields[] { Fields.PINCODE }, Sort.ASCENDING).asJson(),
                 JSONCompareMode.STRICT);
         JSONAssert.assertEquals(Unirest
                 .get("https://data.gov.in/api/datastore/resource.json?resource_id=0a076478-3fd3-4e2c-b2d2-581876f56d77&sort[pincode]=desc")
                 .queryString("api-key", Keys.API_KEY).asJson().getBody().getObject(),
-                Postcode.withContactDetails(Keys.API_KEY.toString())
+                Pincode.pincodeContactDetails(Keys.API_KEY.toString())
                         .sort(new Fields[] { Fields.PINCODE }, Sort.DESCENDING).asJson(),
                 JSONCompareMode.STRICT);
     }
@@ -61,7 +61,7 @@ public class PostcodeContactDetailsTest {
         XMLAssert.assertXMLEqual(Unirest
                 .get("https://data.gov.in/api/datastore/resource.xml?resource_id=0a076478-3fd3-4e2c-b2d2-581876f56d77")
                 .queryString("api-key", Keys.API_KEY).asString().getBody(),
-                Postcode.withContactDetails(Keys.API_KEY.toString()).asXML());
+                Pincode.pincodeContactDetails(Keys.API_KEY.toString()).asXML());
     }
 
     @Test
@@ -69,7 +69,7 @@ public class PostcodeContactDetailsTest {
         XMLAssert.assertXMLEqual(Unirest
                 .get("https://data.gov.in/api/datastore/resource.xml?resource_id=0a076478-3fd3-4e2c-b2d2-581876f56d77&limit=10")
                 .queryString("api-key", Keys.API_KEY).asString().getBody(),
-                Postcode.withContactDetails(Keys.API_KEY.toString()).limit(10).asXML());
+                Pincode.pincodeContactDetails(Keys.API_KEY.toString()).limit(10).asXML());
     }
 
     @Test
@@ -77,7 +77,7 @@ public class PostcodeContactDetailsTest {
         XMLAssert.assertXMLEqual(Unirest
                 .get("https://data.gov.in/api/datastore/resource.xml?resource_id=0a076478-3fd3-4e2c-b2d2-581876f56d77&offset=10")
                 .queryString("api-key", Keys.API_KEY).asString().getBody(),
-                Postcode.withContactDetails(Keys.API_KEY.toString()).offset(10).asXML());
+                Pincode.pincodeContactDetails(Keys.API_KEY.toString()).offset(10).asXML());
 
     }
 
@@ -86,12 +86,12 @@ public class PostcodeContactDetailsTest {
         XMLAssert.assertXMLEqual(Unirest
                 .get("https://data.gov.in/api/datastore/resource.xml?resource_id=0a076478-3fd3-4e2c-b2d2-581876f56d77&sort[pincode]=asc")
                 .queryString("api-key", Keys.API_KEY).asString().getBody(),
-                Postcode.withContactDetails(Keys.API_KEY.toString())
+                Pincode.pincodeContactDetails(Keys.API_KEY.toString())
                         .sort(new Fields[] { Fields.PINCODE }, Sort.ASCENDING).asXML());
         XMLAssert.assertXMLEqual(Unirest
                 .get("https://data.gov.in/api/datastore/resource.xml?resource_id=0a076478-3fd3-4e2c-b2d2-581876f56d77&sort[pincode]=desc")
                 .queryString("api-key", Keys.API_KEY).asString().getBody(),
-                Postcode.withContactDetails(Keys.API_KEY.toString())
+                Pincode.pincodeContactDetails(Keys.API_KEY.toString())
                         .sort(new Fields[] { Fields.PINCODE }, Sort.DESCENDING).asXML());
     }
 
@@ -105,7 +105,7 @@ public class PostcodeContactDetailsTest {
                         put("filters[pincode]", 560073);
                     }
                 }).asJson().getBody().getObject(),
-                Postcode.withContactDetails(Keys.API_KEY.toString()).filters(new HashMap() {
+                Pincode.pincodeContactDetails(Keys.API_KEY.toString()).filters(new HashMap() {
 
                     {
                         put(Filter.PINCODE, 560073);
@@ -122,7 +122,7 @@ public class PostcodeContactDetailsTest {
                     {
                         put("filters[pincode]", 560073);
                     }
-                }).asString().getBody(), Postcode.withContactDetails(Keys.API_KEY.toString()).filters(new HashMap() {
+                }).asString().getBody(), Pincode.pincodeContactDetails(Keys.API_KEY.toString()).filters(new HashMap() {
 
                     {
                         put(Filter.PINCODE, 560073);
@@ -139,7 +139,7 @@ public class PostcodeContactDetailsTest {
                     {
                         put("filters[pincode]", 560073);
                     }
-                }).asJson().getBody().getObject(), Postcode.withContactDetails(Keys.API_KEY.toString())
+                }).asJson().getBody().getObject(), Pincode.pincodeContactDetails(Keys.API_KEY.toString())
                         .fields(new Fields[] { Fields.PINCODE }).filters(new HashMap() {
 
                             {
@@ -158,7 +158,7 @@ public class PostcodeContactDetailsTest {
                     {
                         put("filters[pincode]", 560073);
                     }
-                }).asString().getBody(), Postcode.withContactDetails(Keys.API_KEY.toString())
+                }).asString().getBody(), Pincode.pincodeContactDetails(Keys.API_KEY.toString())
                         .fields(new Fields[] { Fields.PINCODE }).filters(new HashMap() {
 
                             {

@@ -15,7 +15,7 @@ import com.mashape.unirest.http.exceptions.UnirestException;
  * @author Deepak
  *
  */
-public class PostcodeProperties {
+public class PincodeProperties {
 
     private static Integer offset;
 
@@ -33,9 +33,9 @@ public class PostcodeProperties {
 
     private static String api_key;
 
-    protected PostcodeProperties(URLProperties urlProperties, String api_key) {
-        PostcodeProperties.resource_id = urlProperties.toString();
-        PostcodeProperties.api_key = api_key;
+    protected PincodeProperties(URLProperties urlProperties, String api_key) {
+        PincodeProperties.resource_id = urlProperties.toString();
+        PincodeProperties.api_key = api_key;
     }
 
     /**
@@ -44,8 +44,8 @@ public class PostcodeProperties {
      * @param offset
      * @return
      */
-    public PostcodeProperties offset(Integer offset) {
-        PostcodeProperties.offset = offset;
+    public PincodeProperties offset(Integer offset) {
+        PincodeProperties.offset = offset;
         return this;
     }
 
@@ -56,12 +56,12 @@ public class PostcodeProperties {
      * @return
      */
     @SuppressWarnings({ "rawtypes", "unchecked" })
-    public PostcodeProperties filters(HashMap<Filter, String> filters) {
+    public PincodeProperties filters(HashMap<Filter, String> filters) {
         HashMap<String, Object> filter = new HashMap();
         for (Map.Entry<Filter, String> f : filters.entrySet()) {
             filter.put(f.getKey().toString(), f.getValue());
         }
-        PostcodeProperties.filters = filter;
+        PincodeProperties.filters = filter;
         return this;
     }
 
@@ -71,8 +71,8 @@ public class PostcodeProperties {
      * @param limit
      * @return
      */
-    public PostcodeProperties limit(Integer limit) {
-        PostcodeProperties.limit = limit;
+    public PincodeProperties limit(Integer limit) {
+        PincodeProperties.limit = limit;
         return this;
     }
 
@@ -82,8 +82,8 @@ public class PostcodeProperties {
      * @param fields
      * @return
      */
-    public PostcodeProperties fields(Fields[] fields) {
-        PostcodeProperties.fields = StringUtils.join(fields, ",");
+    public PincodeProperties fields(Fields[] fields) {
+        PincodeProperties.fields = StringUtils.join(fields, ",");
         return this;
     }
 
@@ -94,10 +94,10 @@ public class PostcodeProperties {
      * @param sort
      * @return
      */
-    public PostcodeProperties sort(Fields[] sortField, Sort sort) {
-        PostcodeProperties.sortField = "sort[".concat(StringUtils.join(Fields.toStringArray(sortField), ","))
+    public PincodeProperties sort(Fields[] sortField, Sort sort) {
+        PincodeProperties.sortField = "sort[".concat(StringUtils.join(Fields.toStringArray(sortField), ","))
                 .concat("]");
-        PostcodeProperties.sort = sort.toString();
+        PincodeProperties.sort = sort.toString();
         return this;
     }
 
